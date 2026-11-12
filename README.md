@@ -126,52 +126,33 @@ flowchart TD
 
 ## 7. Tech Stack & Architecture
 
-### Surface
+OpenConversation is a mobile app built with **React Native, Expo, and TypeScript**. The first demo targets iPhone. The home screen opens **Write & Show** and labels **Live Captions** as **Coming Soon**.
 
-- **Surface:** Cross-platform **mobile** application using React Native with Expo (iOS and Android); optional computer/web companion later.
-- **Why:** Participant A already communicates from his phone during everyday interactions. A home screen offering **Notebook / Write & Show** and **Microphone / Live Captions** keeps both communication methods one tap away. The user chooses a **task**, not a disability label. This two-mode approach is a design hypothesis to test.
-
-### Stack
-
-| Piece | Choice | Why |
+| Part | Choice | Why it fits |
 |---|---|---|
-| Front end / interface | **React Native + Expo + TypeScript**, optionally Expo Router | Cross-platform mobile codebase; home screen routes to separate Write & Show and Live Captions screens. |
-| Back end / automation logic | **No required server for first offline writing prototype**. Add a Node.js/Express API only if justified by speech recognition or feedback requirements. | Keep core written communication usable offline and avoid unnecessary infrastructure. |
-| Data | React state initially; **expo-sqlite** if local phrases or caption history are later needed | Simple local-first design, with no cloud transcript database by default. |
-| Outside services / APIs | **expo-speech** for text-to-speech; **speech recognition engine to be evaluated** | Speech synthesis and speech recognition are different capabilities. Recognition may require native integration or a cloud service. |
-| Hosting / where it runs | iOS / Android builds with Expo's testing and build tools; deployment not yet configured | Can test native-device features before planning public beta distribution. |
+| Interface | **React Native** | Builds the note editor, pinch-to-enlarge text, and Conversations list, with a path to Android and web. |
+| Development tools | **Expo** | Provides tools to build and test the app on an actual iPhone. |
+| Language | **TypeScript** | Defines the shape of conversations and expiration settings so type errors can be caught during development. |
+| Speech-to-text | **`expo-speech-recognition`** | Connects the red microphone button to iOS speech recognition so a spoken reply appears in the same note. |
+| Data | **Expo SQLite** | Stores conversation text and optional expiration times locally so users can reopen saved exchanges offline. |
+| Back end | **No custom server** | The app handles editing, saving, and deletion locally and uses iOS speech recognition for spoken replies. |
+| Hosting and demo | **Expo development build on iPhone** | Runs the app and its native speech module on the demo device without web hosting. |
 
 ### Architecture
 
-**Navigation first:** Opening the application displays two large, labeled choices; each has its own screen. Users can return to the home screen and select the other mode.
+**Write & Show** opens to a blank note ready to type. Either person can type directly or tap the red microphone to dictate a reply. The **Conversations** list lets users reopen a saved exchange, keep it, set it to auto-delete after a chosen duration, or delete it immediately. The app checks for expired conversations when it opens or returns to the foreground so expired notes are cleared before they appear in the list.
 
 ```mermaid
 flowchart TD
-    U["Open React Native / Expo app"] --> H["Home: choose communication method"]
-    H -->|"Notebook icon"| N["Write & Show screen"]
-    H -->|"Microphone icon"| M["Live Captions screen"]
-    N --> T["Type a message"]
-    T --> D["Show large, readable text"]
-    T -->|"User taps Speak"| S["Text-to-speech on device when supported"]
-    M -->|"User taps Start Captions"| P["Microphone permission + audio capture"]
-    P --> R["Speech recognition engine — to be selected"]
-    R --> C["Display live text"]
-    N --> H
-    M --> H
+    H["Home"] --> W["Write & Show note"]
+    H --> L["Live Captions · Coming Soon"]
+    W --> M["Red microphone"]
+    M --> S["iOS speech recognition"]
+    S -->|"Insert spoken reply as text"| W
+    W --> C["Conversations list"]
+    C -->|"Reopen saved note"| W
+    C -->|"Keep, set expiration, or delete"| D[("Local SQLite storage")]
 ```
-
-**How client → API → database could fit later:** The **Expo app is the client**. If cloud speech processing is required, it sends authorized audio to an **API / recognition service** and receives caption text. If the user voluntarily submits app feedback, the client could send **feedback-only data** to an API and a database. Neither the API nor cloud database is required for basic offline writing, and conversation transcripts should **not** be sent to a feedback database.
-
-```mermaid
-flowchart LR
-    APP["Expo client"] -->|"Optional: cloud speech request"| API["API / speech service"]
-    API -->|"Caption result"| APP
-    APP -->|"Optional, consented feedback"| FAPI["Feedback API"]
-    FAPI --> DB[("Feedback database — later")]
-    APP --> LOCAL[("Local writing / temporary data")]
-```
-
-**Privacy / constraints:** Do not silently retain voices or transcripts. Before capturing conversations, provide clear microphone indicators and appropriate notice/consent. Offline writing should work without internet, but **offline recognition remains unproven**. Automatic end-of-day deletion is a self-discovery preference for a later caption-history feature, not yet a confirmed partner requirement; if implemented, expired content must not reappear when the app reopens.
 
 ---
 
