@@ -3,7 +3,7 @@
 > An accessibility-focused mobile communication companion offering two user-selected experiences: **Notebook / Write & Show** for written communication and **Microphone / Live Captions** for reading speech.
 
 **Partner:** Participant A (anonymous Deaf community member) · **Partner's role:** Primary user / discovery partner  
-**Team:** [Your name(s)] · **Course:** CMP 464/343 Product 2 · **Last updated:** November 11, 2026  
+**Team:** [Eivind Cuate-Orea] · **Course:** CMP 464/343 Product 2 · **Last updated:** November 11, 2026  
 **Live demo:** See Demo section (not yet deployed)
 
 > **Status:** Discovery and planning. The two-mode interface is a **proposed design**, not an interviewed partner's confirmed request. The primary partner has confirmed a preference for Notes-style writing; live-caption preferences so far come from a separate self-discovery reflection. No prototype or partner usability test has been completed.
@@ -22,7 +22,7 @@ Unlike a business partner, Participant A is an individual end user. **Confirm wi
 
 ## 2. Discovery Log
 
-### Conversation #1 · [Confirm interview date] · [Confirm format] · with Primary Deaf Participant
+### Conversation #1 · 9/11/26 · Discovery Reflection · with Primary Deaf Participant
 
 - **Their goals:** Communicate comfortably and independently with hearing people; use written communication rather than lip-reading; complete ordinary interactions without needing to persuade others to use an accessible communication method.
 - **How the work happens today:** When communicating with a hearing person, Participant A indicates that he is Deaf, sometimes by pointing toward his ear. He opens Notes, types what he needs, shows the message, and may exchange written messages back and forth. During a package pickup, he types that he is Deaf and is there to collect a package. He has a separate voice-output app when spoken output is useful. He uses Ava to read transcribed speech and ZVRS for telephone communication.
@@ -33,7 +33,7 @@ Unlike a business partner, Participant A is an individual end user. **Confirm wi
 
 **Follow-up questions:** How often does he leave an establishment? Which steps of Notes communication are inconvenient? Would a single communication interface improve his experience, or would he rather keep using Notes? What specifically went wrong when using ZVRS over Wi-Fi?
 
-### Conversation #2 · [Confirm date(s)] · Self-discovery reflection · with Hard-of-Hearing Researcher (not the Product 2 partner)
+### Conversation #2 · [9/11/26] · Self-discovery reflection · with Hard-of-Hearing Researcher (not the Product 2 partner)
 
 - **Their goals:** Follow multi-speaker conversations, especially while doing other tasks; identify speakers in captions; recover information missed while concentrating.
 - **How the work happens today:** Sometimes uses Apple Live Listen and live transcription. Live Listen's microphone position can affect clarity, and amplification sometimes produces an uncomfortable ringing or echo-like effect. Live transcription helps but, in the researcher's experience, captions are not labeled by speaker.
