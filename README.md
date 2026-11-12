@@ -126,32 +126,30 @@ flowchart TD
 
 ## 7. Tech Stack & Architecture
 
-OpenConversation is a mobile app built with **React Native, Expo, and TypeScript**. The first demo targets iPhone. The home screen opens **Write & Show** and labels **Live Captions** as **Coming Soon**.
+OpenConversation is a native iPhone app written in **Swift**. The first demo focuses on **Write & Show**, and the home screen labels **Live Captions** as **Coming Soon**.
 
 | Part | Choice | Why it fits |
 |---|---|---|
-| Interface | **React Native** | Builds the note editor, pinch-to-enlarge text, and Conversations list, with a path to Android and web. |
-| Development tools | **Expo** | Provides tools to build and test the app on an actual iPhone. |
-| Language | **TypeScript** | Defines the shape of conversations and expiration settings so type errors can be caught during development. |
-| Speech-to-text | **`expo-speech-recognition`** | Connects the red microphone button to iOS speech recognition so a spoken reply appears in the same note. |
-| Data | **Expo SQLite** | Stores conversation text and optional expiration times locally so users can reopen saved exchanges offline. |
-| Back end | **No custom server** | The app handles editing, saving, and deletion locally and uses iOS speech recognition for spoken replies. |
-| Hosting and demo | **Expo development build on iPhone** | Runs the app and its native speech module on the demo device without web hosting. |
+| Interface | **SwiftUI** | Builds the note editor, pinch-to-enlarge text, and Conversations list with native iPhone controls. |
+| Local storage | **SwiftData** | Saves typed messages, transcribed replies, and optional expiration times on the iPhone so saved conversations can be reopened offline. |
+| Speech-to-text | **Apple’s Speech framework** | Converts a spoken reply into text and inserts it into the same note when someone uses the red microphone. |
+| Back end | **No custom server** | The app manages notes and deletion on the iPhone and uses Apple’s Speech framework for spoken replies. |
+| Build and demo | **Xcode** | Builds and runs the app on an iPhone so the microphone and permissions can be tested on the demo device. |
 
 ### Architecture
 
-**Write & Show** opens to a blank note ready to type. Either person can type directly or tap the red microphone to dictate a reply. The **Conversations** list lets users reopen a saved exchange, keep it, set it to auto-delete after a chosen duration, or delete it immediately. The app checks for expired conversations when it opens or returns to the foreground so expired notes are cleared before they appear in the list.
+**Write & Show** opens to a blank note ready to type. Either person can type directly or tap the red microphone to dictate a reply. The **Conversations** list lets users reopen an exchange, keep it, set it to auto-delete, or delete it immediately. The app clears expired conversations when it opens or returns to the foreground, before displaying the list. Typing, displaying, and reopening notes work offline. Offline speech recognition will be tested on the demo iPhone.
 
 ```mermaid
 flowchart TD
     H["Home"] --> W["Write & Show note"]
     H --> L["Live Captions · Coming Soon"]
-    W --> M["Red microphone"]
-    M --> S["iOS speech recognition"]
+    W -->|"Tap red microphone"| S["Apple Speech framework"]
     S -->|"Insert spoken reply as text"| W
+    W -->|"Save conversation"| D[("Local SwiftData storage")]
     W --> C["Conversations list"]
     C -->|"Reopen saved note"| W
-    C -->|"Keep, set expiration, or delete"| D[("Local SQLite storage")]
+    C -->|"Load, keep, set expiration, or delete"| D
 ```
 
 ---
